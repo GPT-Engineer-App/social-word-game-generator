@@ -18,12 +18,17 @@ const Index = () => {
 
   const handleGeneratePairs = () => {
     const randomWords = ["shoes", "salary", "book", "coffee", "apple"];
+    if (names.length > randomWords.length) {
+      alert("Not enough unique words for the number of participants.");
+      return;
+    }
     const shuffledNames = [...names].sort(() => 0.5 - Math.random());
+    const shuffledWords = [...randomWords].sort(() => 0.5 - Math.random()).slice(0, names.length);
     const generatedPairs = shuffledNames.map((person, index) => ({
       name: person.name,
       phone: person.phone,
       pair: shuffledNames[(index + 1) % shuffledNames.length].name,
-      word: randomWords[Math.floor(Math.random() * randomWords.length)]
+      word: shuffledWords[index]
     }));
     setPairs(generatedPairs);
   };
