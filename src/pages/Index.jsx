@@ -10,7 +10,14 @@ const Index = () => {
   const wordCategories = {
     default: ["shoes", "salary", "book", "coffee", "apple"],
     animals: ["cat", "dog", "elephant", "tiger", "lion"],
-    colors: ["red", "blue", "green", "yellow", "purple"]
+    colors: ["red", "blue", "green", "yellow", "purple"],
+    tech: ["computer", "smartphone", "internet", "software", "hardware"],
+    food: ["pizza", "burger", "pasta", "salad", "sushi"],
+    books: ["novel", "biography", "mystery", "fantasy", "science"],
+    movies: ["action", "comedy", "drama", "thriller", "horror"],
+    entertainment: ["music", "concert", "theater", "dance", "festival"],
+    medicine: ["doctor", "nurse", "hospital", "surgery", "pharmacy"],
+    cars: ["sedan", "SUV", "convertible", "truck", "coupe"]
   };
 
   const handleInputChange = (index, event) => {
@@ -65,6 +72,13 @@ const Index = () => {
           <option value="default">Default</option>
           <option value="animals">Animals</option>
           <option value="colors">Colors</option>
+          <option value="tech">Tech</option>
+          <option value="food">Food</option>
+          <option value="books">Books</option>
+          <option value="movies">Movies</option>
+          <option value="entertainment">Entertainment</option>
+          <option value="medicine">Medicine</option>
+          <option value="cars">Cars</option>
         </Select>
         <Button leftIcon={<FaRandom />} onClick={handleGeneratePairs}>Generate Pairs</Button>
         {pairs.length > 0 && (
