@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
-import { Container, VStack, Input, Button, Text, Box, HStack } from "@chakra-ui/react";
+import { Container, VStack, Input, Button, Text, Box, HStack, Select, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 import { FaPlus, FaRandom } from "react-icons/fa";
 
 const Index = () => {
   const [names, setNames] = useState([{ name: '', phone: '' }]);
   const [pairs, setPairs] = useState([]);
+  const [category, setCategory] = useState('default');
+
+  const wordCategories = {
+    default: ["shoes", "salary", "book", "coffee", "apple"],
+    animals: ["cat", "dog", "elephant", "tiger", "lion"],
+    colors: ["red", "blue", "green", "yellow", "purple"]
+  };
 
   const handleInputChange = (index, event) => {
     const values = [...names];
@@ -17,13 +24,13 @@ const Index = () => {
   };
 
   const handleGeneratePairs = () => {
-    const randomWords = ["shoes", "salary", "book", "coffee", "apple"];
-    if (names.length > randomWords.length) {
+    const selectedWords = wordCategories[category];
+    if (names.length > selectedWords.length) {
       alert("Not enough unique words for the number of participants.");
       return;
     }
     const shuffledNames = [...names].sort(() => 0.5 - Math.random());
-    const shuffledWords = [...randomWords].sort(() => 0.5 - Math.random()).slice(0, names.length);
+    const shuffledWords = [...selectedWords].sort(() => 0.5 - Math.random()).slice(0, names.length);
     const generatedPairs = shuffledNames.map((person, index) => ({
       name: person.name,
       phone: person.phone,
@@ -54,6 +61,11 @@ const Index = () => {
           </HStack>
         ))}
         <Button leftIcon={<FaPlus />} onClick={handleAddFields}>Add More</Button>
+        <Select placeholder="Select category" onChange={(e) => setCategory(e.target.value)}>
+          <option value="default">Default</option>
+          <option value="animals">Animals</option>
+          <option value="colors">Colors</option>
+        </Select>
         <Button leftIcon={<FaRandom />} onClick={handleGeneratePairs}>Generate Pairs</Button>
         {pairs.length > 0 && (
           <Box mt={4} width="100%">
@@ -63,6 +75,22 @@ const Index = () => {
                 <Text><strong>{pair.name}</strong> ({pair.phone}) should make <strong>{pair.pair}</strong> say the word <strong>{pair.word}</strong>.</Text>
               </Box>
             ))}
+            <Table variant="simple" mt={4}>
+              <Thead>
+                <Tr>
+                  <Th>Phone Number</Th>
+                  <Th>Message</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {pairs.map((pair, index) => (
+                  <Tr key={index}>
+                    <Td>{pair.phone}</Td>
+                    <Td>Hi {pair.name} - you are welcome to play this game, you need to make {pair.pair} say the word {pair.word}</Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
           </Box>
         )}
       </VStack>
